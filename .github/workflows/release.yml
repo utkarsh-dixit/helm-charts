@@ -204,5 +204,5 @@ jobs:
           RELEASE_TAG: ${{ steps.read-tag.outputs.chart_tag }}
           CHANNEL_ALIAS: ${{ env.CHANNEL_ALIAS }}
         run: |
-          cd manifests && replicated release create --yaml-dir . --promote "$CHANNEL_ALIAS"
+          cd manifests && replicated release create --yaml-dir . --promote "$CHANNEL_ALIAS" --version "$RELEASE_TAG"
 
