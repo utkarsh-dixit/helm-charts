@@ -17,7 +17,7 @@ permissions:
   pull-requests: write
 
 env:
-  CHANNEL_ALIAS: unstableChannel
+  CHANNEL_ALIAS: Unstable
 
 jobs:
   prepare_pr:
@@ -134,9 +134,8 @@ jobs:
       - name: Build chart package
         run: |
           helm dependency update composio
-          mkdir -p helm-release
-          helm package composio --destination helm-release
-          ls -l helm-release
+          helm package composio --destination manifests
+          ls -l manifests
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -145,7 +144,7 @@ jobs:
           name: ${{ steps.read-tag.outputs.tag }}
           generate_release_notes: true
           files: |
-            helm-release/*.tgz
+            manifests/*.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -163,7 +162,7 @@ jobs:
       - name: Promote release to unstableChannel
         env:
           REPLICATED_API_TOKEN: ${{ secrets.REPLICATED_API_TOKEN }}
-          APP_SLUG: ${{ secrets.REPLICATED_APP_SLUG }}
+          REPLICATED_APP: ${{ secrets.REPLICATED_APP_SLUG }}
           RELEASE_TAG: ${{ steps.read-tag.outputs.tag }}
           CHANNEL_ALIAS: ${{ env.CHANNEL_ALIAS }}
         run: |
@@ -172,8 +171,5 @@ jobs:
             exit 1
           fi
 
-          replicated release promote \
-            --app "$APP_SLUG" \
-            --channel "$CHANNEL_ALIAS" \
-            --version "$RELEASE_TAG"
+          cd manifests && replicated release create --yaml-dir . --promote "$CHANNEL_ALIAS"
 
