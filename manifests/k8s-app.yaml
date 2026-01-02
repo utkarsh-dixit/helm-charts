@@ -6,23 +6,23 @@ metadata:
     kots.io/exclude: "true"
   labels:
     app.kubernetes.io/name: "composio"
-    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/version: "0.1.12"
 spec:
   selector:
     matchLabels:
-     app.kubernetes.io/name: "composio"
+      app.kubernetes.io/name: "composio"
   componentKinds:
     - group: core
       kind: Service
     - group: apps
       kind: Deployment
   descriptor:
-    version: "0.0.1"
+    version: "0.1.12"
     description: "Composio"
     icons:
       - src: "https://avatars.githubusercontent.com/u/128464815?s=48&v=4"
         type: "image/png"
     type: composio
     links:
-      - description: 🔗 Open Composio
+      - description: "\U0001F517 Open Composio"
         url: 'https://{{repl ConfigOption "composio_domain" }}'
