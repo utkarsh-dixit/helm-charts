@@ -55,6 +55,33 @@ jobs:
           ' composio/values.yaml
           echo "Updated composio/values.yaml image tags to ${RELEASE_TAG}"
 
+      - name: Set chart version and appVersion
+        env:
+          RELEASE_TAG: ${{ inputs.releaseTag }}
+        run: |
+          yq -i '
+            .version = strenv(RELEASE_TAG) |
+            .appVersion = strenv(RELEASE_TAG)
+          ' composio/Chart.yaml
+          echo "Updated composio/Chart.yaml version fields to ${RELEASE_TAG}"
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: v3.14.4
+
+      - name: Package chart and copy to manifests
+        env:
+          RELEASE_TAG: ${{ inputs.releaseTag }}
+        run: |
+          cd composio
+          helm dependency update
+          helm package .
+          mkdir -p ../manifests
+          rm -f ../manifests/composio-*.tgz
+          mv composio-*.tgz ../manifests/
+          ls -l ../manifests
+
       - name: Create release PR
         uses: peter-evans/create-pull-request@v6
         with:
