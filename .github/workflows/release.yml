@@ -9,7 +9,7 @@ on:
         default: ""
         type: string
   pull_request:
-    branches: [ main, master ]
+    branches: [ release-stable, master ]
     types: [closed]
 
 permissions:
@@ -64,7 +64,7 @@ jobs:
           body: |
             This PR sets the release tag to `${{ inputs.releaseTag }}` across internal images in `composio/values.yaml`.
 
-            Merging this PR will trigger the release workflow (on push to main/master) to package the chart, create the GitHub release, and promote it to the `unstableChannel` in Replicated.
+            Merging this PR will trigger the release workflow (on push to master) to package the chart, create the GitHub release, and promote it to the `unstableChannel` in Replicated.
           labels: release
 
   release:
