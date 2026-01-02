@@ -75,6 +75,10 @@ jobs:
           yq -i '
             .spec.chart.chartVersion = strenv(RELEASE_TAG)
           ' manifests/composio.yaml
+          yq -i '
+            .metadata.labels."app.kubernetes.io/version" = strenv(RELEASE_TAG) |
+            .spec.descriptor.version = strenv(RELEASE_TAG)
+          ' manifests/k8s-app.yaml
           echo "Updated composio/Chart.yaml version fields and manifests/composio.yaml chartVersion to ${RELEASE_TAG}"
 
       - name: Set up Helm
