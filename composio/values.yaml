@@ -17,7 +17,7 @@ global:
     name: "008971668139.dkr.ecr.us-east-1.amazonaws.com"
   imagePullSecrets:
     - name: ecr-secret
-  # Add global security defaults for GKE Autopilot
+      # Add global security defaults for GKE Autopilot
 # External secrets configuration
 # Pass these during helm install using --set flags:
 # --set externalSecrets.ecr.token="$(aws ecr get-login-password --region us-east-1)"
@@ -107,7 +107,7 @@ apollo:
   replicaCount: 2
   image:
     repository: composio-self-host/apollo
-    tag: "release-2025_11_05"
+    tag: "0.1"
     pullPolicy: Always
   ingress:
     enabled: false
@@ -134,12 +134,12 @@ apollo:
     enabled: true
     image:
       repository: composio-self-host/apollo-db-init
-      tag: "release-2025_11_05"
+      tag: "0.1"
       pullPolicy: Always
-    # podSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 3000
-    #   fsGroup: 2000
+      # podSecurityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 3000
+      #   fsGroup: 2000
   # containerSecurityContext:
   #   allowPrivilegeEscalation: false
   #   runAsNonRoot: true
@@ -186,8 +186,8 @@ apollo:
       temp: "composio-temp"
       # Blob container for permanent files
       permanent: "composio-permanent"
-    # For Azure, the connection string is read from the Secret:
-    #   {release}-azure-connection-string (key: AZURE_CONNECTION_STRING)
+      # For Azure, the connection string is read from the Secret:
+      #   {release}-azure-connection-string (key: AZURE_CONNECTION_STRING)
   # Note: Secrets are now managed globally in the 'secrets' section
 
   # HPA (Horizontal Pod Autoscaler) configuration
@@ -210,7 +210,7 @@ thermos:
   replicaCount: 2
   image:
     repository: composio-self-host/thermos
-    tag: "release-2025_11_05"
+    tag: "0.1"
     pullPolicy: Always
   # nodeSelector: {}
   # tolerations: []
@@ -233,12 +233,12 @@ thermos:
     enabled: true
     image:
       repository: composio-self-host/thermos-db-init
-      tag: "release-2025_11_05"
+      tag: "0.1"
       pullPolicy: Always
-    # podSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 3000
-    #   fsGroup: 2000
+      # podSecurityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 3000
+      #   fsGroup: 2000
   # containerSecurityContext:
   #   allowPrivilegeEscalation: false
   #   runAsNonRoot: true
@@ -657,7 +657,7 @@ mercury:
   replicaCount: 1
   image:
     repository: composio-self-host/mercury
-    tag: "release-2025_11_05"
+    tag: "0.1"
     pullPolicy: Always
   # nodeSelector: {}
   # tolerations: []
@@ -730,7 +730,7 @@ frontend:
   replicaCount: 1
   image:
     repository: composio-self-host/frontend
-    tag: "release-2025_11_05"
+    tag: "0.1"
     pullPolicy: Always
   service:
     type: ClusterIP
