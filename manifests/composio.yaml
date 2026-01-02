@@ -8,10 +8,8 @@ spec:
     # name must match the chart name from the .tgz chart archive
     name: composio
     # chartVersion must match the chart version from the .tgz chart archive
-    chartVersion: 0.1.6
- 
+    chartVersion: 0.1.9
   namespace: composio
-
   values:
     replicated:
       isEmbeddedCluster: repl{{ eq Distribution "embedded-cluster"}}
@@ -21,11 +19,11 @@ spec:
     global:
       environment: development
       domain: localhost
-      registry: 
+      registry:
         name: "008971668139.dkr.ecr.us-east-1.amazonaws.com"
       imagePullSecrets:
         - name: '{{repl ImagePullSecretName }}'
-    image: 
+    image:
       # Get the pull secret name with ImagePullSecretName
       pullSecrets:
         - name: '{{repl ImagePullSecretName }}'
