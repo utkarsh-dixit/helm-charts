@@ -72,7 +72,10 @@ jobs:
             .version = strenv(RELEASE_TAG) |
             .appVersion = strenv(RELEASE_TAG)
           ' composio/Chart.yaml
-          echo "Updated composio/Chart.yaml version fields to ${RELEASE_TAG}"
+          yq -i '
+            .spec.chart.chartVersion = strenv(RELEASE_TAG)
+          ' manifests/composio.yaml
+          echo "Updated composio/Chart.yaml version fields and manifests/composio.yaml chartVersion to ${RELEASE_TAG}"
 
       - name: Set up Helm
         uses: azure/setup-helm@v4.2.0
