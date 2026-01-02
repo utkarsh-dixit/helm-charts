@@ -70,18 +70,6 @@ jobs:
         with:
           version: v3.14.4
 
-      - name: Package chart and copy to manifests
-        env:
-          RELEASE_TAG: ${{ inputs.releaseTag }}
-        run: |
-          cd composio
-          helm dependency update
-          helm package .
-          mkdir -p ../manifests
-          rm -f ../manifests/composio-*.tgz
-          mv composio-*.tgz ../manifests/
-          ls -l ../manifests
-
       - name: Create release PR
         uses: peter-evans/create-pull-request@v6
         with:
