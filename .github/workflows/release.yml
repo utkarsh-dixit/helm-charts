@@ -172,7 +172,6 @@ jobs:
             exit 1
           fi
 
-          replicated login --token "$REPLICATED_API_TOKEN"
           replicated release promote \
             --app "$APP_SLUG" \
             --channel "$CHANNEL_ALIAS" \
