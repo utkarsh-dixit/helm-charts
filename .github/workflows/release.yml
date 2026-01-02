@@ -136,8 +136,13 @@ jobs:
 
       - name: Install Replicated CLI
         run: |
-          curl -sSL "https://api.replicated.com/cli/v1/replicated/download?platform=Linux" \
-            | sudo tar -xz -C /usr/local/bin replicated
+          version=$(curl -s https://api.github.com/repos/replicatedhq/replicated/releases/latest \
+            | grep -m1 -Po '"tag_name":\s*"v\K[^"]+')
+          curl -Ls \
+            "https://github.com/replicatedhq/replicated/releases/download/v${version}/replicated_${version}_linux_amd64.tar.gz" \
+            -o replicated.tar.gz
+          tar xf replicated.tar.gz replicated && rm replicated.tar.gz
+          sudo mv replicated /usr/local/bin/replicated
           replicated version
 
       - name: Promote release to unstableChannel
