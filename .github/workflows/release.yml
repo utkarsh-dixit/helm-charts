@@ -166,10 +166,5 @@ jobs:
           RELEASE_TAG: ${{ steps.read-tag.outputs.tag }}
           CHANNEL_ALIAS: ${{ env.CHANNEL_ALIAS }}
         run: |
-          if [ -z "$REPLICATED_API_TOKEN" ] || [ -z "$APP_SLUG" ]; then
-            echo "Missing REPLICATED_API_TOKEN or REPLICATED_APP_SLUG secret" >&2
-            exit 1
-          fi
-
           cd manifests && replicated release create --yaml-dir . --promote "$CHANNEL_ALIAS"
 
