@@ -14,7 +14,10 @@ spec:
 
   values:
     replicated:
+      isEmbeddedCluster: repl{{ eq Distribution "embedded-cluster"}}
       enabled: true
+      imagePullSecrets:
+        - name: '{{repl ImagePullSecretName }}'
     global:
       environment: development
       domain: localhost
